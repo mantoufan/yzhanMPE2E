@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node index",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "wdio": "wdio run ./wdio.conf.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,14 @@
   },
   "homepage": "https://github.com/mantoufan/mpAnalyzer#readme",
   "dependencies": {
-    "http-mitm-proxy": "^1.0.0"
+    "http-mitm-proxy": "^1.0.0",
+    "opencv4nodejs": "^5.6.0",
+    "webdriverio": "^8.6.2"
+  },
+  "opencv4nodejs": {
+    "disableAutoBuild": 1,
+    "opencvIncludeDir": "C:\\Users\\mhjlw\\github\\mpAnalyzer\\lib\\opencv\\build\\include",
+    "opencvLibDir": "C:\\Users\\mhjlw\\github\\mpAnalyzer\\lib\\opencv\\build\\x64\\vc16\\lib",
+    "opencvBinDir": "C:\\Users\\mhjlw\\github\\mpAnalyzer\\lib\\opencv\\build\\x64\\vc16\\bin"
   }
 }
