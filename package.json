@@ -22,9 +22,11 @@
   "dependencies": {
     "commander": "^10.0.0",
     "http-mitm-proxy": "^1.0.0",
+    "jimp": "^0.22.7",
     "opencv4nodejs": "^5.6.0",
     "screenshot-desktop": "^0.0.0-development",
-    "webdriverio": "^8.6.2"
+    "webdriverio": "^8.6.2",
+    "win32-api": "^20.4.1"
   },
   "opencv4nodejs": {
     "disableAutoBuild": 1,
