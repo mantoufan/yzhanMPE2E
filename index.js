@@ -1,74 +1,23 @@
-import { Proxy } from 'http-mitm-proxy'
-import zlib from 'zlib'
-const proxy = new Proxy()
-const port = 7890
-const requestChunks = []
-console.debug = () => null
-console.error = () => null
+import { remote } from 'webdriverio'
+import { WEBDRIVER_CONF, PROXY_CONF } from './config/conf.js'
+import { IMG_PATH } from './config/const.js'
+import { getOpts } from './utils/commander.js'
+import { findSubImgOnScreen } from './utils/opencv.js'
+import proxy from './utils/proxy.js'
 
-proxy.onRequestData(function(ctx, chunk, callback) {
-  requestChunks.push(chunk)
-  return callback(null, chunk)
-})
-
-proxy.onRequestEnd(function(ctx, callback) {
-  const { httpVersion, method, url, headers } = ctx.clientToProxyRequest
-  const data = (Buffer.concat(requestChunks)).toString()
-  const requestObject = {
-    httpVersion,
-    method,
-    host: headers.host,
-    url,
-    // headers
-  }
-  if (data) requestObject['data'] = data
-  
-  const responseChunks = []
-
-  ctx.onResponseData(function(ctx, chunk, callback) {
-    responseChunks.push(chunk)
-    return callback(null, chunk)
-  })
-
-  ctx.onResponseEnd(function(ctx, callback) {
-    const { headers } = ctx.serverToProxyResponse
-    if (responseChunks.length && headers['content-type']?.toLowerCase().indexOf('application/json') > -1) {
-      const data = Buffer.concat(responseChunks)
-      let unzlib = null
-      switch(headers['content-encoding']) {
-        case 'br':
-          unzlib = zlib.createBrotliDecompress()
-        break
-        case 'gzip':
-          unzlib = zlib.createGunzip()
-        break
-        case 'deflate':
-          unzlib = zlib.createInflate()
-        break
-      }
-      console.log('请求', requestObject)
-      if (unzlib === null) {
-        console.log('响应', {
-          // headers,
-          data: data.toString() // appiuim
-        })
-      } else {
-        unzlib.write(data)
-        unzlib.on('data', data => {
-          console.log('响应', {
-            'content-encoding': headers['content-encoding'],
-            // headers,
-            data: data.toString()
-          })
-        })
-        unzlib.on('error', () => {})
-      }
-    }
-    responseChunks.length = 0
-    return callback()
-  })
-  requestChunks.length = 0
-  return callback()
-})
-proxy.listen({ port, silent: true })
-console.log(`listening on ${port}`)
+async function main () {
+  const opts = getOpts()
+  const driver = await remote(WEBDRIVER_CONF)
+  await driver.execute('windows:click', await findSubImgOnScreen(IMG_PATH.mppanel))
+  await driver.execute('windows:click', await findSubImgOnScreen(IMG_PATH.mpsearchpopup))
+  await driver.pause(500)
+  await driver.execute('windows:keys', { actions: { text: opts.name }})
+  await driver.execute('windows:click', await findSubImgOnScreen(IMG_PATH.mpsearchbt))
+  await driver.pause(500)
+  const { x: mpsearchbtX, y: mpsearchbtY } = await findSubImgOnScreen(IMG_PATH.mpsearchbt)
+  await driver.execute('windows:click', { x: mpsearchbtX, y: mpsearchbtY + 190  })
+  proxy.listen(PROXY_CONF)
+  console.log(`listening on ${PROXY_CONF.port}`)
+  return
+}
+main()
