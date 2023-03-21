@@ -51,23 +51,24 @@ export const getDriver = async({ appTopLevelWindow, app }) => {
   return await remote(getCapability({ appTopLevelWindow, app }))
 }
 
-export const listenChange = (driver, { timeout = 10000, maxSameTimes = 5 }) => new Promise(resolve => {
+export const recordChange = driver => new Promise(resolve => {
+  const timeout = 100000
   let tmpPath = IMG_PATH.tmp
-  let sameTimes = 1
   const startTime = performance.now()
-  const done = async () => {
+  const visited = new Set()
+  const done = async (sameTimes) => {
     const newTmpPath = tmpPath.replace(/\d+/, a => +a + 1)
     await driver.saveScreenshot(newTmpPath)
-    const img = await Jimp.read(tmpPath)
     const newImg = await Jimp.read(newTmpPath)
-    const diff = Jimp.compareHashes(img.pHash(), newImg.pHash())
-    if (diff === 0) {
-      if (++sameTimes === maxSameTimes) return clear(true)
+    const pHash = newImg.pHash()
+    if (visited.has(pHash)) {
+      if (sameTimes === 3) return clear(true)
+      done(sameTimes + 1)
     } else {
-      sameTimes = 0
+      visited.add(pHash)
       tmpPath = newTmpPath
+      done(0)
     }
-    done()
   }
   let timerTimeout = setTimeout(() => {
     clear(false)
@@ -83,5 +84,5 @@ export const listenChange = (driver, { timeout = 10000, maxSameTimes = 5 }) => n
       text
     })
   }
-  done()
+  done(0)
 })

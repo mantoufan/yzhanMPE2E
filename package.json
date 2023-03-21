@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/mantoufan/mpAnalyzer#readme",
   "dependencies": {
+    "@leejim/wxml-parser": "^0.2.0",
     "commander": "^10.0.0",
     "http-mitm-proxy": "^1.0.0",
     "jimp": "^0.22.7",
@@ -27,7 +28,8 @@
     "screenshot-desktop": "^0.0.0-development",
     "string-comparison": "^1.1.0",
     "webdriverio": "^8.6.2",
-    "win32-api": "^20.4.1"
+    "win32-api": "^20.4.1",
+    "wxml": "^2.2.2"
   },
   "opencv4nodejs": {
     "disableAutoBuild": 1,
