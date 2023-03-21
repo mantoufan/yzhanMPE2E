@@ -4,6 +4,7 @@ Scan miniprogram to catch datas through network and UI by DOM traversal and imag
 ## 0. Enviroment
 - A Windows server is needed.
 - Install Wechat PC Version using default setup path.
+- Node version < 17, since the winappdriver's `windows: click` etc. doesn't support 17+
 ## 1. Setup OpenCV
 ### 1.1 Download OpenCV
 You could download and unzip it to `mpAnalyzer\lib\`  
@@ -44,3 +45,25 @@ Please enable the global proxy to ensure the download is successful
 ```shell
 appium driver install chromium
 ```
+# Install
+Please make sure your node version is < 17  
+```
+nvm use
+```
+```shell
+npm install
+```
+# Usage
+## Run server
+```shell
+npm run server
+```
+## Do task
+### Scan a miniprogram online using keywords or name
+```shell
+npm start {Miniprogram Name} / {Keywords}
+```
+# Documents  
+- [appium-windows-driver](https://github.com/appium/appium-windows-driver)  
+- [appium-chromium-driver](https://github.com/appium/appium-chromium-driver)  
+- [Webdriver API](https://webdriver.io/docs/api)  

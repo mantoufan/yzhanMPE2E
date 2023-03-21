@@ -29,7 +29,6 @@ async function main () {
   const title = '可口可乐吧'
   const handle = await getHandleByTitle(title)
   const mp = await getDriver({ appTopLevelWindow: '0x' + handle.toString(16) })
-  const bt = await mp.getContext()
   console.dir(bt)
   // const res = await listenChange(mp, {
   //   maxSameTimes: 2,
