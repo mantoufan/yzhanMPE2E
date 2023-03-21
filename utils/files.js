@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 export const removeDir = dir => {
+  if (fs.existsSync(dir) === false) return
   let files = fs.readdirSync(dir)
   for(var i=0;i<files.length;i++){
     let newPath = path.join(dir,files[i]);

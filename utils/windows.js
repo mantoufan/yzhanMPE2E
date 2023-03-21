@@ -26,7 +26,7 @@ export const getDriver = async({ appTopLevelWindow, app }) => {
   return await remote(getCapability({ appTopLevelWindow, app }))
 }
 
-export const listenChange = (driver, { interval = 1000, timeout = 10000, maxSameTimes = 5 }) => new Promise(resolve => {
+export const listenChange = (driver, { timeout = 10000, maxSameTimes = 5 }) => new Promise(resolve => {
   let tmpPath = IMG_PATH.tmp
   let sameTimes = 1
   const startTime = performance.now()
@@ -39,9 +39,9 @@ export const listenChange = (driver, { interval = 1000, timeout = 10000, maxSame
     if (diff === 0) {
       if (++sameTimes === maxSameTimes) return clear(true)
     } else {
+      sameTimes = 0
       tmpPath = newTmpPath
     }
-    await driver.pause(interval)
     done()
   }
   let timerTimeout = setTimeout(() => {
