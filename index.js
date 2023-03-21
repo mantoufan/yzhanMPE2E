@@ -8,6 +8,7 @@ import { ocr } from './utils/ocr.js'
 import Jimp from 'jimp'
 import { removeDir } from './utils/files.js'
 
+
 async function main () {
   // removeDir(IMG_PATH.tmpDir)
   // const opts = getOpts()
@@ -26,10 +27,12 @@ async function main () {
   // const title = text.split('\r\n')[0].split(' ')[0].replace(' | ', '丨').replace('圭', '丰')
   // await wechat.execute('windows:click', { x: mpsearchbtX, y: mpsearchbtY + 190  })
   // await wechat.pause(1000)
-  const title = '可口可乐吧'
-  const handle = await getHandleByTitle(title)
+  const title = '上.....光细闻'
+  const { handle, title: windowTitle } = await getHandleByTitle(title)
+  console.log(windowTitle)
+  if (handle === void 0) throw Error(title + ' can\'t be found')
   const mp = await getDriver({ appTopLevelWindow: '0x' + handle.toString(16) })
-  console.dir(bt)
+  mp.saveScreenshot('./img/tmp.png')
   // const res = await listenChange(mp, {
   //   maxSameTimes: 2,
   //   timeout: 50000

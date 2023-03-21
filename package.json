@@ -25,6 +25,7 @@
     "jimp": "^0.22.7",
     "opencv4nodejs": "^5.6.0",
     "screenshot-desktop": "^0.0.0-development",
+    "string-comparison": "^1.1.0",
     "webdriverio": "^8.6.2",
     "win32-api": "^20.4.1"
   },

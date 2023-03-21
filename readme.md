@@ -67,3 +67,14 @@ npm start {Miniprogram Name} / {Keywords}
 - [appium-windows-driver](https://github.com/appium/appium-windows-driver)  
 - [appium-chromium-driver](https://github.com/appium/appium-chromium-driver)  
 - [Webdriver API](https://webdriver.io/docs/api)  
+- [Windows User32 API](https://github.com/waitingsong/node-win32-api/blob/main/packages/win32-api/src/lib/user32/api.ts)
+
+<!-- # Block
+1. DOM 遍历 主优先级  
+2. 识别率  
+1.1 媒体 + 政府  
+1.2 | 特殊符号 中英文混合，极容易符号不正确  
+3. 句柄 
+2.1 搜索的当时查询句柄  
+- 实现的时候，可以实现数次查询  
+2.2 使用其它方式   -->

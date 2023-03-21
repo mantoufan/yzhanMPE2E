@@ -4,11 +4,36 @@ import { remote } from 'webdriverio'
 import { IMG_PATH } from '../config/const.js'
 import Jimp from 'jimp'
 import { ocr } from '../utils/ocr.js'
+import ffi from 'ffi-napi'
+import stringComparison from 'string-comparison'
 
-export const getHandleByTitle = async (title) => {
+export const getHandleByExTitle = async (title) => {
   const user32 = User32.load()
   const calcLpszWindow = Buffer.from(title + '\0', 'ucs2')
-  return await user32.FindWindowExW(0, 0, null, calcLpszWindow) 
+  return await user32.FindWindowW(0, 0, null, calcLpszWindow) 
+}
+
+export const getHandleByTitle = async (title) => {
+  const cos = stringComparison.cosine
+  let ans = { similarity: 0 }
+  const WndEnumProc = ffi.Callback('bool', ['long', 'int32'], async (hwnd, lParam) => {
+    const len = 512
+    const buf = Buffer.alloc(len << 1)
+    const processId = await user32.GetWindowThreadProcessId(hwnd, buf)
+    await user32.GetWindowTextW(hwnd, buf, len + 1)
+    const windowTitle = buf.toString('ucs2').replace(/\0+$/, '')
+    const similarity = cos.similarity(windowTitle, title)
+    if (similarity > ans.similarity) ans = {
+      title: windowTitle,
+      handle: hwnd,
+      processId,
+      similarity
+    }
+    return true
+  })
+  const user32 = User32.load()
+  await user32.EnumWindows(WndEnumProc, 0)
+  return ans
 }
 
 const getCapability = ({ appTopLevelWindow, app }) => {
