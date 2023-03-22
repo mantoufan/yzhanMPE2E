@@ -24,7 +24,6 @@ like this:
 npm install -g appium@next
 ```
 ## 3. Install Drivers
-### 3.1 winappdriver
 #### ① Donwload and Install WinAppDriver
 https://github.com/microsoft/WinAppDriver/releases/tag/v1.2.1  
 Notes:
@@ -33,17 +32,6 @@ Notes:
 #### ② Install appium-windows-driver
 ```shell
 appium driver install --source=npm appium-windows-driver
-```
-### 3.2 appium-chromium-driver
-#### ① Reinstall npm
-It is needed to make npm ready for chromium-driver
-```shell
-npm install -g npm  
-```
-#### ② Install appium-chromium-driver
-Please enable the global proxy to ensure the download is successful
-```shell
-appium driver install chromium
 ```
 # Install
 Please make sure your node version is < 17  
@@ -64,8 +52,7 @@ npm run server
 npm start {Miniprogram Name} / {Keywords}
 ```
 # Documents  
-- [appium-windows-driver](https://github.com/appium/appium-windows-driver)  
-- [appium-chromium-driver](https://github.com/appium/appium-chromium-driver)  
+- [appium-windows-driver](https://github.com/appium/appium-windows-driver)   
 - [Webdriver API](https://webdriver.io/docs/api)  
 - [Windows User32 API](https://github.com/waitingsong/node-win32-api/blob/main/packages/win32-api/src/lib/user32/api.ts)
 

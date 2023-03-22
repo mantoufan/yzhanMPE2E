@@ -8,7 +8,6 @@ export const findSubImgOnImg = (imgPath, subImgPath) => {
   const matched = original.matchTemplate(template, 5)
   const minMax = matched.minMaxLoc()
   const { maxLoc: { x, y } } = minMax
-
   // Draw bounding rectangle
   // original.drawRectangle(
   //   new cv.Rect(x, y, template.cols, template.rows),
