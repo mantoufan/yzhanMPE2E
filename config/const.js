@@ -5,6 +5,7 @@ export const IMG_PATH = {
   mpsearchbar: './img/mpsearchbar.png',
   mpsearchbt: './img/mpsearchbt.png',
   mpsearchclose: './img/mpsearchclose.png',
-  tmp: './img/tmp/0.png',
-  tmpDir: './img/tmp'
+  tmp: './img/tmp0.png',
+  allowandcancel: './img/allowandcancel.png',
+  sendandcancel: './img/sendandcancel.png'
 }

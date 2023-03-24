@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "server": "appium",
-    "start": "node index -n "
+    "start": "node index -n ",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +25,7 @@
     "commander": "^10.0.0",
     "http-mitm-proxy": "^1.0.0",
     "jimp": "^0.22.7",
+    "md5": "^2.3.0",
     "opencv4nodejs": "^5.6.0",
     "screenshot-desktop": "^0.0.0-development",
     "string-comparison": "^1.1.0",
@@ -36,5 +38,8 @@
     "opencvIncludeDir": "C:\\Users\\mhjlw\\github\\mpAnalyzer\\lib\\opencv\\build\\include",
     "opencvLibDir": "C:\\Users\\mhjlw\\github\\mpAnalyzer\\lib\\opencv\\build\\x64\\vc16\\lib",
     "opencvBinDir": "C:\\Users\\mhjlw\\github\\mpAnalyzer\\lib\\opencv\\build\\x64\\vc16\\bin"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
   }
 }

@@ -1,7 +1,7 @@
 
 import { IMG_PATH } from '../config/const.js'
 import Jimp from 'jimp'
-import stringComparison from 'string-comparison'
+import { findSubImgOnScreen } from './opencv.js'
 
 export const recordChange = driver => new Promise(resolve => {
   const timeout = 100000
@@ -45,7 +45,17 @@ export const isChanged = async (driver) => {
   return res
 }
 
+export const getLastPageSource = () => lastPageSource
+
 export const by = async (dirver, using, value) => {
   const id = await dirver.findElement(using, value)
   return dirver.$('id=' + id['ELEMENT'])
+}
+
+export const hasPopup = async() => {
+  for (const path of [IMG_PATH.allowandcancel, IMG_PATH.sendandcancel]) {
+    const { x } = await findSubImgOnScreen(path)
+    if (x > -1) return true
+  }
+  return false
 }

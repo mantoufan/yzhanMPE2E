@@ -5,9 +5,13 @@ export const findSubImgOnImg = (imgPath, subImgPath) => {
   const original = cv.imread(imgPath)
   const template = cv.imread(subImgPath)
 
-  const matched = original.matchTemplate(template, 5)
+  const matched = original.matchTemplate(template, cv.TM_CCOEFF_NORMED)
   const minMax = matched.minMaxLoc()
-  const { maxLoc: { x, y } } = minMax
+  let { maxLoc: { x, y }, maxVal } = minMax
+  if (maxVal < 0.9) {
+    x = -(template.cols >> 1) - 1
+    y = -(template.rows >> 1) - 1
+  }
   // Draw bounding rectangle
   // original.drawRectangle(
   //   new cv.Rect(x, y, template.cols, template.rows),
@@ -33,4 +37,23 @@ export const findSubImgOnScreen = async(imgPath) => {
     res[key] = res[key] >> 1
   })
   return res
+}
+
+export const isExisting = async(imgPath) => {
+  const { x } = await findSubImgOnScreen(imgPath)
+  return x !== -1
+}
+
+export const waitForExist = async(imgPath, timeout = 10000) => {
+  let x = -1
+  let isTimeout = false
+  let timer = setTimeout(() => isTimeout = true, timeout)
+  while (x === -1) {
+    if (isTimeout) break
+    const res = await findSubImgOnScreen(imgPath)
+    x = res[x]
+  }
+  clearTimeout(timer)
+  timer = null
+  return isTimeout === false
 }
