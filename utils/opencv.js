@@ -8,7 +8,7 @@ export const findSubImgOnImg = (imgPath, subImgPath) => {
   const matched = original.matchTemplate(template, cv.TM_CCOEFF_NORMED)
   const minMax = matched.minMaxLoc()
   let { maxLoc: { x, y }, maxVal } = minMax
-  if (maxVal < 0.9) {
+  if (maxVal <= 0.97) { // 阈值
     x = -(template.cols >> 1) - 1
     y = -(template.rows >> 1) - 1
   }
@@ -30,14 +30,16 @@ export const findSubImgOnImg = (imgPath, subImgPath) => {
   }
 }
 
-export const findSubImgOnScreen = async(imgPath) => {
+export const findSubImgOnScreen = async(imgPath, callback = v => v >> 1) => {
   await screenshot({ filename: IMG_PATH.screen })
   const res = findSubImgOnImg(IMG_PATH.screen, imgPath)
   Object.keys(res).forEach(key => {
-    res[key] = res[key] >> 1
+    res[key] = callback(res[key])
   })
   return res
 }
+
+export const findSubImgOnScreenOriginal = async(imgPath) => findSubImgOnScreen(imgPath, v => v)
 
 export const isExisting = async(imgPath) => {
   const { x } = await findSubImgOnScreen(imgPath)
@@ -51,7 +53,7 @@ export const waitForExist = async(imgPath, timeout = 10000) => {
   while (x === -1) {
     if (isTimeout) break
     const res = await findSubImgOnScreen(imgPath)
-    x = res[x]
+    x = res['x']
   }
   clearTimeout(timer)
   timer = null

@@ -24,15 +24,16 @@ like this:
 npm install -g appium@next
 ```
 ## 3. Install Drivers
-#### ① Donwload and Install WinAppDriver
+### 3.1 Donwload and Install WinAppDriver
 https://github.com/microsoft/WinAppDriver/releases/tag/v1.2.1  
 Notes:
 - Don't try the newset version, *1.2.1* is needed 
 - Set "ms:experimental-webdriver" to false to ignore some errors  
-#### ② Install appium-windows-driver
+### 3.2 Install appium-windows-driver
 ```shell
 appium driver install --source=npm appium-windows-driver
 ```
+
 # Install
 Please make sure your node version is < 17  
 ```
@@ -41,16 +42,18 @@ nvm use
 ```shell
 npm install
 ```
+
 # Usage
 ## Run server
 ```shell
 npm run server
 ```
-## Do task
+## Run client
 ### Scan a miniprogram online using keywords or name
 ```shell
 npm start {Miniprogram Name} / {Keywords}
 ```
+
 # Documents  
 - [appium-windows-driver](https://github.com/appium/appium-windows-driver)   
 - [Webdriver API](https://webdriver.io/docs/api)  

@@ -27,6 +27,7 @@
     "jimp": "^0.22.7",
     "md5": "^2.3.0",
     "opencv4nodejs": "^5.6.0",
+    "paddleocrjson": "^1.0.9-a",
     "screenshot-desktop": "^0.0.0-development",
     "string-comparison": "^1.1.0",
     "webdriverio": "^8.6.2",

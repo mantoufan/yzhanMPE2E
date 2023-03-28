@@ -1,5 +1,6 @@
 
-// app: 'C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe',
+import { POPUP_TYPE } from './const.js'
+
 export const WEBDRIVER_CONF = {
   path: '/',
   port: 4723,
@@ -16,4 +17,11 @@ export const WEBDRIVER_CONF = {
 export const PROXY_CONF = {
   port: 7890,
   silent: true
+}
+
+export const DEFAULT_OPERATE = {
+  [POPUP_TYPE.Alert]: 'cancel',
+  [POPUP_TYPE.WillOpen]: 'cancel',
+  [POPUP_TYPE.Privacy]: 'cancel',
+  [POPUP_TYPE.SendTo]: 'cancel'
 }

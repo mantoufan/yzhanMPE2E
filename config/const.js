@@ -5,7 +5,19 @@ export const IMG_PATH = {
   mpsearchbar: './img/mpsearchbar.png',
   mpsearchbt: './img/mpsearchbt.png',
   mpsearchclose: './img/mpsearchclose.png',
+  mpsearchtab: './img/mpsearchtab.png',
   tmp: './img/tmp0.png',
-  allowandcancel: './img/allowandcancel.png',
-  sendandcancel: './img/sendandcancel.png'
+  popup: {
+    okcancel: './img/popup/okcancel.png',
+    allowcancel: './img/popup/allowcancel.png',
+    sendcancel: './img/popup/sendcancel.png',
+    willopen: './img/popup/willopen.png'
+  }
+}
+
+export const POPUP_TYPE = {
+  Alert: Symbol('Alert'),
+  WillOpen: Symbol('WillOpen'),
+  Privacy: Symbol('Privacy'),
+  SendTo: Symbol('SendTo'),
 }
