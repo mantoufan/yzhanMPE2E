@@ -7,7 +7,7 @@ export class TabManager {
   add(curPath, id, name) {
     if (this.tabIds[curPath] === void 0) this.tabIds[curPath] = new Set()
     this.tabIds[curPath].add(id)
-    console.log('TabManager:', this.tabIds[curPath], name)
+    console.log('TabManager:', name, 'Added')
   }
   async swithTo (driver, curPath, callback) {
     if (await callback() === true) return true

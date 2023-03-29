@@ -1,6 +1,7 @@
 import cv from 'opencv4nodejs'
 import { IMG_PATH } from '../config/const.js'
 import screenshot from 'screenshot-desktop'
+
 export const findSubImgOnImg = (imgPath, subImgPath) => {
   const original = cv.imread(imgPath)
   const template = cv.imread(subImgPath)
@@ -30,16 +31,14 @@ export const findSubImgOnImg = (imgPath, subImgPath) => {
   }
 }
 
-export const findSubImgOnScreen = async(imgPath, callback = v => v >> 1) => {
+export const findSubImgOnScreen = async(imgPath) => {
   await screenshot({ filename: IMG_PATH.screen })
   const res = findSubImgOnImg(IMG_PATH.screen, imgPath)
   Object.keys(res).forEach(key => {
-    res[key] = callback(res[key])
+    res[key] = res[key] >> 1
   })
   return res
 }
-
-export const findSubImgOnScreenOriginal = async(imgPath) => findSubImgOnScreen(imgPath, v => v)
 
 export const isExisting = async(imgPath) => {
   const { x } = await findSubImgOnScreen(imgPath)

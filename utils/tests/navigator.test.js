@@ -3,6 +3,7 @@ import { backPath, getCurDir, navigate } from '../navigator'
 describe('navigator', () => {
   it('getCurDir', () => {
     expect(getCurDir('1/2/4/5')).toBe('1/2/4/')
+    expect(getCurDir('1\\2\\4\\5')).toBe('1\\2\\4\\')
   })
   it('backPath', () => {
     expect(backPath('/1/1/')).toBe('/1/')

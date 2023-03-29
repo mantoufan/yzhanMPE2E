@@ -23,8 +23,10 @@
   "dependencies": {
     "@leejim/wxml-parser": "^0.2.0",
     "commander": "^10.0.0",
+    "console-log-colors": "^0.4.0",
     "http-mitm-proxy": "^1.0.0",
     "jimp": "^0.22.7",
+    "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "opencv4nodejs": "^5.6.0",
     "paddleocrjson": "^1.0.9-a",
@@ -32,8 +34,7 @@
     "string-comparison": "^1.1.0",
     "webdriverio": "^8.6.2",
     "win32-api": "^20.4.1",
-    "wxml": "^2.2.2",
-    "lodash": "^4.17.21"
+    "wxml": "^2.2.2"
   },
   "opencv4nodejs": {
     "disableAutoBuild": 1,

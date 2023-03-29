@@ -15,11 +15,4 @@ export const IMG_PATH = {
   }
 }
 
-export const POPUP_TYPE = {
-  Alert: Symbol('Alert'),
-  WillOpen: Symbol('WillOpen'),
-  Privacy: Symbol('Privacy'),
-  SendTo: Symbol('SendTo'),
-}
-
 export const PLUGINS_DIR = './plugins'

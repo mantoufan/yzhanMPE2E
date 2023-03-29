@@ -1,9 +1,9 @@
 
-import { IMG_PATH, POPUP_TYPE } from '../config/const.js'
+import { IMG_PATH } from '../config/const.js'
 import Jimp from 'jimp'
-import { findSubImgOnScreenOriginal, isExisting } from './opencv.js'
 import { ocr } from './ocr.js'
-import { DEFAULT_OPERATE } from '../config/conf.js'
+import screenshot from 'screenshot-desktop'
+import { findSubImgOnImg } from './opencv.js'
 
 export const recordChange = driver => new Promise(resolve => {
   const timeout = 100000
@@ -63,48 +63,32 @@ export const by = async (dirver, using, value) => {
   return dirver.$('id=' + id['ELEMENT'])
 }
 
-const popupBtTypes = ['okcancel', 'allowcancel', 'sendcancel']
-export const getPopup = async() => {
-  for (const popupBtType of popupBtTypes) {
-    const { left, top, x, width, height } = await findSubImgOnScreenOriginal(IMG_PATH['popup'][popupBtType])
-    if (x === -1) continue
-    const btWidth = width - 30 >>> 1
-    const btLeft= { x: left + (btWidth >>> 1) >> 1, y: top + (height >>> 1) >> 1 }
-    const btRight = { x: left + btWidth + 30 + (btWidth >>> 1) >> 1, y: top + (height >>> 1) >> 1 }
-    switch (popupBtType) {
-      case 'okcancel':
-        return { type: POPUP_TYPE.Alert, left: left - 66, top: top - 355, width: 644, height: 540, btLeft, btRight }
-      case 'allowcancel':
-        if (await isExisting(IMG_PATH['popup']['willopen'])) return { type: POPUP_TYPE.WillOpen, left: left - 66, top: top - 356, width: 644, height: 540, btLeft, btRight }
-        else return { type: POPUP_TYPE.Privacy, left: left - 65, top: top - 377, width: 644, height: 574, btLeft, btRight }
-      case 'sendcancel':
-        return { type: POPUP_TYPE.SendTo, left: left - 660, top: top - 780, width: 1200, height: 890, btLeft, btRight }
-    }
+export const getPopup = async(driver, confs) => {
+  await screenshot({ filename: IMG_PATH.screen })
+  for (const { name, pattern, area, text, operate } of confs) {
+    const params = [], res = { name, text, operates: [] }
+    if (pattern.every(imgPath => {
+      const { x, left, top, width, height } = findSubImgOnImg(IMG_PATH.screen, imgPath)
+      params.push({ left, top, width, height })
+      return x !== -1
+    }) === false) continue
+    const results = await getPopupText(area(...params))
+    res.text = text(results)
+    const op = operate(...params)
+    op.forEach(async ({ name, action, x, y }) => {
+      res.operates.push(name)
+      if (action === 'click') await driver.execute('windows:click', { x, y })
+    })
+    return res
   }
   return null
 }
 
-export const getPopupText = async({ type, left, top, width, height }) => {
+export const getPopupText = async({ left, top, width, height }) => {
   const screen = await Jimp.read(IMG_PATH.screen)
   screen.crop(left, top, width, height)
   screen.writeAsync(IMG_PATH.tmp)
   const { code, data } = await ocr(IMG_PATH.tmp)
   if (code === 101) throw Error('No text on popup')
-  // console.log('data', data)
-  switch(type) {
-    case POPUP_TYPE.Alert:
-      return data[2].text
-    case POPUP_TYPE.WillOpen:
-      return data[1].text
-    case POPUP_TYPE.Privacy:
-      return data[2].text + data[3].text
-    case POPUP_TYPE.SendTo:
-      return data[0].text
-  }
-}
-
-export const defaultPopupOperate = async(driver, { type, btLeft, btRight }) => {
-  const operate = DEFAULT_OPERATE[type] === 'cancel' ? btRight : btLeft
-  if (operate !== null) await driver.execute('windows:click', operate)
-  return operate === btLeft ? Symbol('Ok') : Symbol('Cancel') 
+  return data
 }

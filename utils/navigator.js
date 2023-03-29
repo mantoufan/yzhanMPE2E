@@ -1,9 +1,11 @@
-export const getCurDir = path => path.replace(/(.*\/).*/, '$1')
+export const getCurDir = path => path.replace(/(.*[\/\\]).*/, '$1')
+
 export const backPath = path => {
   const tmp = path.split('/')
   tmp.pop(), tmp.pop()
   return tmp.join('/') + '/'
 }
+
 export const navigate = (curPath, targetPath) => {
   const operates = []
   let i = 0

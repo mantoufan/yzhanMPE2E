@@ -44,16 +44,19 @@ npm install
 ```
 
 # Usage
-## Run server
+## Run Server
 ```shell
 npm run server
 ```
-## Run client
+## Run Client
 ### Scan a miniprogram online using keywords or name
 ```shell
 npm start {Miniprogram Name} / {Keywords}
 ```
-
+## Run Unit Test
+```shell
+npm test
+```
 # Documents  
 - [appium-windows-driver](https://github.com/appium/appium-windows-driver)   
 - [Webdriver API](https://webdriver.io/docs/api)  
