@@ -21,3 +21,5 @@ export const POPUP_TYPE = {
   Privacy: Symbol('Privacy'),
   SendTo: Symbol('SendTo'),
 }
+
+export const PLUGINS_DIR = './plugins'

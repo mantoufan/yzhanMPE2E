@@ -1,4 +1,4 @@
-import { PROXY_CONF } from './config/conf.js'
+import { PROXY_CONF, CONF } from './config/conf.js'
 import proxy from './utils/proxy.js'
 import { IMG_PATH } from './config/const.js'
 import { getOpts } from './utils/commander.js'
@@ -11,6 +11,7 @@ import { isChanged, getPopup, getLastPageSource, getPopupText, defaultPopupOpera
 import { getCurDir, navigate } from './utils/navigator.js'
 import { perform } from './utils/actions.js' 
 import { TabManager } from './utils/tabmanager.js'
+import { loadPluginConf } from './utils/plugin.js'
 
 async function main () {
   const opts = getOpts()
@@ -31,7 +32,8 @@ async function main () {
   // await wechat.execute('windows:click', await findSubImgOnScreen(IMG_PATH.mpsearchclose))
   // await wechat.deleteSession()
   const titleOCR = opts.name
-  const { handle, title } = await getHandleByTitle(titleOCR)
+  const { handle, title: miniprogramName } = await getHandleByTitle(titleOCR)
+  _.merge(CONF, await loadPluginConf(miniprogramName))
   if (handle === void 0) throw Error(titleOCR + ' can\'t be found')
   console.log('handle', handle.toString(16))
   const mp = await getDriver({ appTopLevelWindow: handle.toString(16) })

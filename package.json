@@ -32,7 +32,8 @@
     "string-comparison": "^1.1.0",
     "webdriverio": "^8.6.2",
     "win32-api": "^20.4.1",
-    "wxml": "^2.2.2"
+    "wxml": "^2.2.2",
+    "lodash": "^4.17.21"
   },
   "opencv4nodejs": {
     "disableAutoBuild": 1,

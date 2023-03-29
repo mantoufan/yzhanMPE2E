@@ -6,10 +6,10 @@ export default {
       name: '美团通用弹窗',
       pattern: ['./img/close.png'], // Pattern Image to be searched on the screen
       area ({ left, top, width, height }) { // Return the area for OCR using left, top, width and height of the pattern
-
+        
       },
       text (results) { // Return Data needed from OCR results
-
+        console.log('results', results)
       },
       operate ({ left, top, width, height }) { // Default operate using left, top, width and height of the pattern
         return [
@@ -23,7 +23,4 @@ export default {
       }
     }
   ]
-    
-  }
-  
 }
