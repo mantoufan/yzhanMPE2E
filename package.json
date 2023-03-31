@@ -7,7 +7,10 @@
   "scripts": {
     "server": "appium",
     "start": "node index -n ",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "proxy": "node index -p ",
+    "watch": "node index -w ",
+    "help": "node index -h"
   },
   "repository": {
     "type": "git",
@@ -22,6 +25,7 @@
   "homepage": "https://github.com/mantoufan/mpAnalyzer#readme",
   "dependencies": {
     "@leejim/wxml-parser": "^0.2.0",
+    "chokidar": "^3.5.3",
     "commander": "^10.0.0",
     "console-log-colors": "^0.4.0",
     "http-mitm-proxy": "^1.0.0",

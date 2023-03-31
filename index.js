@@ -16,10 +16,33 @@ import { log } from 'console-log-colors'
 import { listenInput } from './utils/readline.js'
 import _ from 'lodash'
 import { exportData } from './utils/data.js'
+import chokidar from 'chokidar'
+import fs from 'fs'
+import path from 'path'
 
 async function main () {
-  const opts = getOpts()
+  const opts = getOpts(), map = new Map()
   log.cyanBG('Press【E】exit and get result')
+  listenInput('keypress', (str, key) => {
+    if (str === 'e') {
+      if (map.size > 0) log.magenta('Result:', JSON.stringify(exportData(map), void 0, 2))
+      log.magenta('Thanks, bye ^_^')
+      process.exit(0)
+    }
+  })
+  if (opts.watch !== void 0) return log.yellowBright('Watching:', opts.watch),chokidar.watch(opts.watch).on('all', (event, p) => {
+    const stat = fs.statSync(p)
+    const basename = path.basename(p)
+    if (stat.isDirectory()) {
+      if (basename.startsWith('wx')) console.log('Miniprogram Id:', basename)
+    }
+    if (stat.isFile()) {
+      if (basename.endsWith('wxapkg')) console.log('Miniprogram Size:', basename, stat.size)
+    }
+  })
+  if (opts.port !== void 0) return PROXY_CONF.port = opts.port, log.blue('Listen:', opts.port), proxy.listen(PROXY_CONF)
+  
+  
   // const wechat = await getDriver({ app: 'C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe' })
   // await wechat.execute('windows:click', await findSubImgOnScreen(IMG_PATH.mppanel))
   // await wechat.execute('windows:click', await findSubImgOnScreen(IMG_PATH.mpsearchpopup))
@@ -44,18 +67,12 @@ async function main () {
   log.blue('Window:', miniprogramName, 'handle is', handle)
   const mp = await getDriver({ appTopLevelWindow: handle.toString(16) })
   await waitNoChanged(mp)
-  const tabManager = new TabManager(), map = new Map()
+  const tabManager = new TabManager()
   let preURI = '/'
   const queue = [...getElementsByParse(await mp.getPageSource(), '/', ({ id, URI }) => map.set(URI, id))]
   let skip = 0
   while (queue.length) {
     const element = queue.shift()
-    listenInput('keypress', (str, key) => {
-      if (str === 'e') {
-        log.magenta('Result:', JSON.stringify(exportData(map), void 0, 2), 'Thanks, bye ^_^')
-        process.exit(0)
-      }
-    })
     const { attr, tagName, URI } = element
     // if (skip++ < 30) continue
     log.cyan('Navigator:', 'PREV', getCurDir(preURI), 'CUR', getCurDir(URI), 'NEXT', URI, 'OP', JSON.stringify(navigate(getCurDir(preURI), getCurDir(URI))))

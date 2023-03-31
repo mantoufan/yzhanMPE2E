@@ -53,7 +53,15 @@ npm run server
 ```shell
 npm start {Miniprogram Name} / {Keywords}
 ```
-## Run Unit Test
+### Run a proxy with the declared port
+```shell
+npm run proxy 7890
+```
+### Run a monitor with the declared folder
+```shell
+npm run watch "C:\Users\mhjlw\Documents\WeChat Files\Applet"
+```
+### Run Unit Test
 ```shell
 npm test
 ```
@@ -70,4 +78,9 @@ npm test
 3. 句柄 
 2.1 搜索的当时查询句柄  
 - 实现的时候，可以实现数次查询  
-2.2 使用其它方式   -->
+2.2 使用其它方式
+C:\Users\mhjlw\AppData\Roaming\Tencent\WeChat\XPlugin\Plugins\RadiumWMPF
+C:\Users\mhjlw\Documents\WeChat Files\
+
+https://res.servicewechat.com/weapp/release_encrypt/67_j8haCXeJ4m2g4oy-vxYDuSo3CVRGfO9l8vgofit3LtIzBchSaRbjtxY0BSiWgjKSklf3_fapJcni7y3n.zstd?rand=431658695&pass_key=F_59qnc8L8Ooba3VBe3FtRRSVK3wJY0w1cwfiUmMhYYyKV10gQH0MV8KLbxbLjBDg-FIdQNCQf_Nwk-A0GG4fkZwOAf5ay3PiMFhE8xKN5FLvT-Qg6BioehWUqth3qcbWgc5bGtJChllzPnqFB46hZlKUowqyyfHn2i7pcPuxY_pDHLnfsxS0ipHhzn4UC6wHdr9r87yTb459r2ogKvuJCHOPZm6D5LPLHbf3TRwAoA~&ext_code=9FOCBxd7R4XiAgpUN_6jUe0LUn1ZCWAE7hG_ALv-tTE
+-->
