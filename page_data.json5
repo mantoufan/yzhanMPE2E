@@ -1,0 +1,25 @@
+{
+  "node_id": { // first node is root_node
+    "scenes": [], /* privacy_policy | policy_popup | privacy_policy_summary | permission_popup |
+                     personal_data_popup | third_party_popup | cookie_popup | user_prompt_popup |
+                     targeted | basic_function | personal_data_list | third_party_personal_data_list |
+                     account_cancellation | perm_popup_clipboard | perm_popup_storage | perm_popup_calendar |
+                     perm_popup_applist | perm_popup_call | perm_popup_MESSAGE | perm_popup_calllogs | 
+                     perm_popup_contact | perm_popup_location | perm_popup_camera | perm_popup_mic |
+                     perm_popup_album | consent_revoke | 
+                     revoke_targeted  # Revoke permissions for targeted ads and recommendations |
+                     deletion | cookie | personal_data | permission_camera | permission_location */
+    "elements": [
+      {
+        "desc": "", // allow | 允许
+        "text": "",
+        "children": [],
+        "type": "" /* policy_popup / privacy_policy_summary: android.view.View | XCUIElementTypeOther | 
+                      permission_popup: android.widget.LinearLayout | android.widget.LinearLayout |
+                      find_personal_data_permissions: android.widget.LinearLayout |
+                      ...
+                      recursion */
+      },
+    ]
+  }
+}

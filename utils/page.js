@@ -52,8 +52,8 @@ export const getLastPageSource = () => lastPageSource
 export const waitNoChanged = async (driver) => {
   let i = 0, res = false
   while (res = await isChanged(driver), res === false) {
-    await driver.pause(300)
-    if (++i > 10) return false
+    await driver.pause(500)
+    if (++i > 5) return false
   }
   return res
 }

@@ -16,9 +16,6 @@ import { log } from 'console-log-colors'
 import { listenInput } from './utils/readline.js'
 import _ from 'lodash'
 import { exportData } from './utils/data.js'
-import chokidar from 'chokidar'
-import fs from 'fs'
-import path from 'path'
 
 async function main () {
   const opts = getOpts(), map = new Map()
@@ -67,14 +64,14 @@ async function main () {
   log.blue('Window:', miniprogramName, 'handle is', handle)
   const mp = await getDriver({ appTopLevelWindow: handle.toString(16) })
   await waitNoChanged(mp)
-  const tabManager = new TabManager()
+  const tabManager = new TabManager(), ans = Object.create(null)
   let preURI = '/'
   const queue = [...getElementsByParse(await mp.getPageSource(), '/', ({ id, URI }) => map.set(URI, id))]
   let skip = 0
   while (queue.length) {
     const element = queue.shift()
     const { attr, tagName, URI } = element
-    // if (skip++ < 30) continue
+    if (skip++ < 30) continue
     log.cyan('Navigator:', 'PREV', getCurDir(preURI), 'CUR', getCurDir(URI), 'NEXT', URI, 'OP', JSON.stringify(navigate(getCurDir(preURI), getCurDir(URI))))
     log.gray('Searching:', tagName, attr?.['Name'])
     if (await perform(mp, navigate(getCurDir(preURI), getCurDir(URI)), tabManager, map) === false) continue
