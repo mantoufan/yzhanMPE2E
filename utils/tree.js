@@ -48,7 +48,6 @@ export class Tree {
     return res
   }
   initSubFolders(curFolder) {
-    console.log(123)
     const queue = [ 'crawler' ]
     while (queue.length) {
       let l = queue.length
@@ -71,7 +70,6 @@ export class Tree {
       const folder = item['_folder']
       const folderDirPath = exportRootDir + folder
       const imgPath = item['image']
-      console.log('imgPath', imgPath)
       fs.copyFileSync(path.join(imageRootDir, imgPath), path.join(folderDirPath, screenshotsDirPath, path.basename(imgPath)))
     }
   }
@@ -105,7 +103,7 @@ export class Tree {
       const node = Object.assign(Object.create(null), this.tree[key])
       delete node['_folder']
       nodes.push([id, node])
-      edges.push([prev, next, node])
+      edges.push([prev, next, { 'element': node }])
     })
     return { nodes, edges }
   }

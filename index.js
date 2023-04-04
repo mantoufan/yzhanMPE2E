@@ -27,7 +27,7 @@ async function main () {
       process.exit(0)
     }
   })
-  if (opts.watch !== void 0) return log.yellowBright('Watching:', opts.watch),chokidar.watch(opts.watch).on('all', (event, p) => {
+  if (opts.watch !== void 0) return log.yellowBright('Watching:', opts.watch), chokidar.watch(opts.watch).on('all', (event, p) => {
     const stat = fs.statSync(p)
     const basename = path.basename(p)
     if (stat.isDirectory()) {
@@ -62,7 +62,7 @@ async function main () {
   log.blue('Window:', miniprogramName, 'handle is', handle)
   const mp = await getDriver({ appTopLevelWindow: handle.toString(16) })
   await waitNoChanged(mp)
-  const tabManager = new TabManager(), ans = Object.create(null)
+  const tabManager = new TabManager()
   let preURI = '/'
   const queue = [...getElementsByParse(await mp.getPageSource(), '/', ({ id, URI }) => map.set(URI, id))]
   let skip = 0

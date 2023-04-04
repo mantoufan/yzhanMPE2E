@@ -1,6 +1,7 @@
-import { getDirname, removeDirSync } from '../tools'
+import { getDirname } from '../tools'
 import { Tree } from '../tree'
 import path from 'path'
+import fs from 'fs'
 
 describe('tree', () => {
   const data = {
@@ -20,7 +21,6 @@ describe('tree', () => {
     Object.keys(data).forEach(key => {
       tree.add(key, data[key])
     })
-    // console.log(JSON.stringify(tree.export(), null, 2))
     expect(tree.export()).toEqual({
       "before_login": {
         "0": {
@@ -198,75 +198,102 @@ describe('tree', () => {
         0,
         1,
         {
-          "text": "你好",
-          "image": "1.png"
+          "element": {
+            "text": "你好",
+            "image": "1.png"
+          }
         }
       ],
       [
         1,
         2,
         {
-          "image": "102.png"
+          "element": {
+            "image": "102.png"
+          }
         }
       ],
       [
         2,
         3,
         {
-          "image": "10203.png"
+          "element": {
+            "image": "10203.png"
+          }
         }
       ],
       [
         1,
         3,
         {
-          "image": "103.png"
+          "element": {
+            "image": "103.png"
+          }
         }
       ],
       [
         0,
         2,
         {
-          "image": "2.png"
+          "element": {
+            "image": "2.png"
+          }
         }
       ],
       [
         2,
         3,
         {
-          "image": "203.png"
+          "element": {
+            "image": "203.png"
+          }
         }
       ],
       [
         3,
         4,
         {
-          "text": "Hello World",
-          "image": "20304.png"
+          "element": {
+            "text": "Hello World",
+            "image": "20304.png"
+          }
         }
       ],
       [
         0,
         3,
         {
-          "image": "3.png"
+          "element": {
+            "image": "3.png"
+          }
         }
       ],
       [
         3,
         4,
         {
-          "image": "304.png"
+          "element": {
+            "image": "304.png"
+          }
         }
       ],
       [
         4,
         5,
         {
-          "image": "30405.png"
+          "element": {
+            "image": "30405.png"
+          }
         }
       ]
     ])
+    const dirname = path.join(getDirname(), '/tests/')
+    const pklDir = path.join(dirname, '/pkl_folder/')
+    if (fs.existsSync(pklDir) === false) fs.mkdirSync(pklDir)
+    const nodesJsonPath = path.join(pklDir, 'nodes.json')
+    const edgesJsonPath = path.join(pklDir, 'edges.json')
+    fs.writeFileSync(nodesJsonPath, JSON.stringify(nodes, null, 2))
+    fs.writeFileSync(edgesJsonPath, JSON.stringify(edges, null, 2))
   })
   it('exportFolder', () => {
     const dirname = path.join(getDirname(), '/tests/')
