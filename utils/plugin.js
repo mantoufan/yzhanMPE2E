@@ -2,7 +2,7 @@ import _ from 'lodash'
 import fs from 'fs'
 import path from 'path'
 import { PLUGINS_DIR } from '../config/const.js'
-import { backPath, getCurDir } from './navigator.js'
+import { getCurDir } from './navigator.js'
 
 export const traverse = async(dir, callback) => {
   for (const file of fs.readdirSync(dir)) {

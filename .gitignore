@@ -2,3 +2,4 @@ node_modules
 package-lock.json
 .http-mitm-proxy
 lib/opencv
+utils/tests/export_folder/
