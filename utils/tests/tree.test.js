@@ -17,7 +17,6 @@ describe('tree', () => {
     Object.keys(data).forEach(key => {
       tree.add(key, data[key])
     })
-    console.log('tree.export()', JSON.stringify(tree.export(), void 0, 2))
     expect(tree.export()).toEqual({
       '/': {
         children: [
@@ -76,6 +75,15 @@ describe('tree', () => {
           },
         ]
       }
+    })
+  })
+  it('exportPKL', () => {
+    const tree = new Tree()
+    Object.keys(data).forEach(key => {
+      tree.add(key, data[key])
+    })
+    expect(tree.exportPKL()).toEqual({
+      
     })
   })
 })

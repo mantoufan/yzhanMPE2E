@@ -34,5 +34,24 @@ export class Tree {
     })
     return res
   }
+  exportPKL() {
+    const res = {
+      '/': {
+        children: []
+      }
+    }
+    Object.keys(this.tree).sort().forEach(key => {
+      let children = res['/']['children']
+      const keyAr = key.split('/')
+      keyAr.reduce((prev, cur) => {
+        const key = prev + '/' + cur
+        console.log('key', key)
+
+        children = node['children']
+        return key
+      })
+    })
+    return res
+  }
 }
 

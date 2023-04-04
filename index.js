@@ -38,8 +38,6 @@ async function main () {
     }
   })
   if (opts.port !== void 0) return PROXY_CONF.port = opts.port, log.blue('Listen:', opts.port), proxy.listen(PROXY_CONF)
-  
-  
   // const wechat = await getDriver({ app: 'C:\\Program Files (x86)\\Tencent\\WeChat\\WeChat.exe' })
   // await wechat.execute('windows:click', await findSubImgOnScreen(IMG_PATH.mppanel))
   // await wechat.execute('windows:click', await findSubImgOnScreen(IMG_PATH.mpsearchpopup))
