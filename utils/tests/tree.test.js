@@ -1,5 +1,5 @@
 import { getDirname } from '../tools'
-import { Tree } from '../tree'
+import Tree from '../tree'
 import path from 'path'
 import fs from 'fs'
 
@@ -38,7 +38,9 @@ describe('tree', () => {
                           }
                         }
                       ],
-                      "image": "102.png"
+                      "image": "102.png",
+                      "text": "隐私条款",
+                      "definition": "范围"
                     }
                   },
                   {

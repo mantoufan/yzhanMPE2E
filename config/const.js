@@ -12,7 +12,8 @@ export const IMG_PATH = {
     allowcancel: './img/popup/allowcancel.png',
     sendcancel: './img/popup/sendcancel.png',
     willopen: './img/popup/willopen.png'
-  }
+  },
+  runtimedir: './img/runtime'
 }
 
 export const PLUGINS_DIR = './plugins'

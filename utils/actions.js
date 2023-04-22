@@ -20,7 +20,10 @@ export const perform = async(driver, operates, tabManager, map) => {
     } else {
       let id
       const isFound = await tabManager.swithTo(driver, curPath, async() => {
+        await driver.execute('windows:scroll', {x: 1100, y: 500, deltaY: -2400 })
+        await driver.pause(500)
         id = getElementsByParse(await driver.getPageSource(), curPath, callback).find(({ URI }) => URI === curPath + operate)?.['id']
+        console.log('id', id, 'curPath + operate', curPath + operate)
         return id !== void 0
       })
       if (isFound === false) {

@@ -3,7 +3,7 @@ import md5 from 'md5'
 const getURI = (curPath, id) => curPath + id
 
 export const getHash = ({ x, y, width, height, Name }) => {
-  return md5([x, y, width, height, Name].join('.')).slice(0, 4)
+  return parseInt(md5([Name].join('.')).slice(0, 4), 16)
 }
 
 export const getElementsByParse = (wxml, curPath, callback) => {

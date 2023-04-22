@@ -1,8 +1,8 @@
 import fs from 'fs'
 import path from 'path'
-import { removeDirSync } from './tools'
+import { removeDirSync } from './tools.js'
 
-export class Tree {
+export default class Tree {
   constructor() {
     this.tree = Object.create(null)
     this.subFolders = { 'crawler': ['data', 'screenshots'] }
@@ -13,8 +13,11 @@ export class Tree {
   del(key) {
     delete this.tree[key]
   }
+  get(key) {
+    return this.tree[key]
+  }
   key2id(key) {
-    return +key.replace(/\//g, '0')
+    return +(key + '').replace(/\//g, '0')
   }
   initRootChildren(res, _folder) {
     if (res[_folder] === void 0) res[_folder] = {

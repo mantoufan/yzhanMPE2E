@@ -16,13 +16,22 @@ import { log } from 'console-log-colors'
 import { listenInput } from './utils/readline.js'
 import _ from 'lodash'
 import { exportData } from './utils/data.js'
+import fs from 'fs'
+import path from 'path'
+import Tree from './utils/tree.js'
 
 async function main () {
-  const opts = getOpts(), map = new Map()
+  const opts = getOpts(), map = new Map(), tree = new Tree()
   log.cyanBG('Press【E】exit and get result')
   listenInput('keypress', (str, key) => {
     if (str === 'e') {
-      if (map.size > 0) log.magenta('Result:', JSON.stringify(exportData(map), void 0, 2))
+      if (map.size > 0) {
+        log.magenta('Result:', JSON.stringify(exportData(map), void 0, 2))
+        log.magenta('Tree:', JSON.stringify(tree.export(), void 0, 2))
+        const exportRootDir = './export/', imageRootDir = '.'
+        tree.exportFolder(exportRootDir, imageRootDir)
+        console.log('Folder:', exportRootDir, 'generated success')
+      }
       log.magenta('Thanks, bye ^_^')
       process.exit(0)
     }
@@ -69,7 +78,9 @@ async function main () {
   while (queue.length) {
     const element = queue.shift()
     const { attr, tagName, URI } = element
-    if (skip++ < 30) continue
+    if (skip++ > 0 && skip < 30) {
+      continue
+    }
     log.cyan('Navigator:', 'PREV', getCurDir(preURI), 'CUR', getCurDir(URI), 'NEXT', URI, 'OP', JSON.stringify(navigate(getCurDir(preURI), getCurDir(URI))))
     log.gray('Searching:', tagName, attr?.['Name'])
     if (await perform(mp, navigate(getCurDir(preURI), getCurDir(URI)), tabManager, map) === false) continue
@@ -92,6 +103,13 @@ async function main () {
     if (popup !== null) {
       const { name, text, operates } = popup
       log.green('Popup:', '【' + name + '】', text, 'OP', operates)
+      const imgName = URI.replace(/\//g, '') + '.png', image = path.join(IMG_PATH.runtimedir, imgName)
+      fs.copyFileSync(IMG_PATH.screen, image)
+      tree.add(URI, {
+        image,
+        text,
+        _folder: 'settings'
+      })
     } else if (await isChanged(mp) === true) {
       if (btIsExisting === false) preURI += '/'
       const newElements = getElementsByParse(getLastPageSource(), getCurDir(preURI), ({ id, URI }) => {
